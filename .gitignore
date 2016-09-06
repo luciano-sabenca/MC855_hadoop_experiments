@@ -14,3 +14,6 @@ hs_err_pid*
 .idea/
 *.iml
 build/
+.gradle/
+hadoop_experiments.ipr
+hadoop_experiments.iws
