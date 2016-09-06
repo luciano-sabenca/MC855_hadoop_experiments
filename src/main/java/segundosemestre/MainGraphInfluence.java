@@ -28,7 +28,7 @@ public class MainGraphInfluence {
         Job job = Job.getInstance(conf, "GraphInfluence");
 
         ChainMapper.addMapper(job, GraphReader.class, Object.class, Text.class, IntWritable.class, Node.class, new Configuration(false));
-        ChainMapper.addMapper(job, GraphInfluenceMapper.class, IntWritable.class, Node.class, Node.class, NodeInfluence.class, new Configuration(false));
+        ChainMapper.addMapper(job, GraphInfluenceMapper.class, IntWritable.class, Node.class, IntWritable.class, NodeInfluence.class, new Configuration(false));
         job.setJarByClass(MainGraphInfluence.class);
         job.setReducerClass(GraphInfluenceReducer.class);
         job.setOutputKeyClass(IntWritable.class);

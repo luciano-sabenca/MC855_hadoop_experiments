@@ -19,12 +19,12 @@ public class GraphReader extends Mapper<Object, Text, IntWritable, Node> {
 
         Node node = new Node(Integer.parseInt(lineSplit[0]));
 
-        LinkedHashMap<Node, Double> adjacency = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Double> adjacency = new LinkedHashMap<>();
         for (int i = 1; i < lineSplit.length; i++) {
 
             String aux[] = lineSplit[i].split("->");
-            Node node1 = new Node(Integer.parseInt(aux[0].trim()));
-            adjacency.put(node1, Double.parseDouble(aux[1].trim()));
+
+            adjacency.put(Integer.parseInt(aux[0].trim()), Double.parseDouble(aux[1].trim()));
         }
 
         node.setAdjacency(adjacency);
