@@ -18,7 +18,7 @@ public class Node implements Serializable, WritableComparable<Node> {
 
     private Integer id;
 
-    private LinkedHashMap<Node, Double> adjacency = new LinkedHashMap<>();
+    private LinkedHashMap<Integer, Double> adjacency = new LinkedHashMap<>();
     private Map<Integer, Double> state = new HashMap<>();
 
     public Node(){
@@ -49,11 +49,11 @@ public class Node implements Serializable, WritableComparable<Node> {
         this.id = id;
     }
 
-    public LinkedHashMap<Node, Double> getAdjacency() {
+    public LinkedHashMap<Integer, Double> getAdjacency() {
         return adjacency;
     }
 
-    public void setAdjacency(LinkedHashMap<Node, Double> adjacency) {
+    public void setAdjacency(LinkedHashMap<Integer, Double> adjacency) {
         this.adjacency = adjacency;
     }
 
@@ -63,7 +63,7 @@ public class Node implements Serializable, WritableComparable<Node> {
         }
 
         if (!this.equals(node)) {
-            adjacency.put(node, influence);
+            adjacency.put(node.getId(), influence);
         }
 
         return this;
@@ -118,7 +118,7 @@ public class Node implements Serializable, WritableComparable<Node> {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         try {
-            this.adjacency = (LinkedHashMap<Node, Double>) objectInputStream.readObject();
+            this.adjacency = (LinkedHashMap<Integer, Double>) objectInputStream.readObject();
         } catch (ClassNotFoundException e) {
 
         }

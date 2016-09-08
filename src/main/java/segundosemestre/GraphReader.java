@@ -13,14 +13,14 @@ public class GraphReader extends Mapper<Object, Text, IntWritable, Node> {
     protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         String[] lineSplit = value.toString().split(",");
 
-        Node node = new Node(Integer.parseInt(lineSplit[0]));
+        Node node = new Node(Integer.parseInt(lineSplit[0].trim()));
 
-        LinkedHashMap<Node, Double> adjacency = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Double> adjacency = new LinkedHashMap<>();
         for (int i = 1; i < lineSplit.length; i++) {
 
             String aux[] = lineSplit[i].split("->");
-            Node node1 = new Node(Integer.parseInt(aux[0].trim()));
-            adjacency.put(node1, Double.parseDouble(aux[1].trim()));
+
+            adjacency.put(Integer.parseInt(aux[0].trim()), Double.parseDouble(aux[1].trim()));
         }
 
         node.setAdjacency(adjacency);

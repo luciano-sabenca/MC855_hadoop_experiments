@@ -20,7 +20,7 @@ class GraphMakerReducer extends Reducer<IntWritable, NodeInfluence, IntWritable,
         node.normalize();
 
         final String[] out = {""};
-        node.getAdjacency().forEach((influenced, influence) -> out[0] += ", " + influenced.getId() + "->" + influence);
+        node.getAdjacency().forEach((influenced, influence) -> out[0] += ", " + influenced + "->" + influence);
         context.write(key, new Text(out[0]));
     }
 }
