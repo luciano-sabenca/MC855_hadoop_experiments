@@ -8,10 +8,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @author Luciano P. Sabenca (luciano.sabenca@movile.com)
- *         Creation Date: 04/09/16
- */
 public class GraphInfluenceReducer extends Reducer<Node, NodeInfluence, IntWritable, Text> {
 
     @Override
