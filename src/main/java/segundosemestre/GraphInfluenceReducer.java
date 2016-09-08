@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @author Luciano P. Sabenca (luciano.sabenca@movile.com)
- *         Creation Date: 04/09/16
- */
 public class GraphInfluenceReducer extends Reducer<IntWritable, NodeInfluence, IntWritable, Text> {
 
     @Override

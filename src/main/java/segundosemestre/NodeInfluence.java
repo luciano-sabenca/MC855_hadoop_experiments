@@ -7,10 +7,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.Serializable;
 
-/**
- * @author Luciano P. Sabenca (luciano.sabenca@movile.com)
- *         Creation Date: 04/09/16
- */
 public class NodeInfluence implements Serializable, WritableComparable<NodeInfluence> {
 
     private Integer influencedBy;
@@ -69,9 +65,6 @@ public class NodeInfluence implements Serializable, WritableComparable<NodeInflu
         return result;
     }
 
-
-
-
     @Override
     public int compareTo(NodeInfluence o) {
         return this.equals(o)? 0 : this.influenced - o.influenced;
@@ -83,7 +76,6 @@ public class NodeInfluence implements Serializable, WritableComparable<NodeInflu
         out.writeInt(influencedBy);
 
         out.writeDouble(this.influence);
-
     }
 
     @Override
@@ -91,5 +83,14 @@ public class NodeInfluence implements Serializable, WritableComparable<NodeInflu
         this.influenced = in.readInt();
         this.influencedBy = in.readInt();
         this.influence = in.readDouble();
+    }
+
+    public Integer getInfluenced() {
+        return influenced;
+    }
+
+    @Override
+    public String toString() {
+        return influenced + "->" + influence;
     }
 }

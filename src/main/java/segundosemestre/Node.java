@@ -14,11 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author Luciano P. Sabenca (luciano.sabenca@movile.com)
- *         Creation Date: 04/09/16
- */
 public class Node implements Serializable, WritableComparable<Node> {
+
     private Integer id;
 
     private LinkedHashMap<Integer, Double> adjacency = new LinkedHashMap<>();
@@ -28,9 +25,12 @@ public class Node implements Serializable, WritableComparable<Node> {
 
     }
 
-
     public Node(Integer id) {
         this.id = id;
+    }
+
+    public Node(NodeInfluence nodeInfluence) {
+        this(nodeInfluence.getInfluenced());
     }
 
     public Map<Integer, Double> getState() {
@@ -57,6 +57,17 @@ public class Node implements Serializable, WritableComparable<Node> {
         this.adjacency = adjacency;
     }
 
+    public Node addAdjacency(Node node, Double influence) {
+        if (adjacency == null) {
+            adjacency = new LinkedHashMap<>();
+        }
+
+        if (!this.equals(node)) {
+            adjacency.put(node.getId(), influence);
+        }
+
+        return this;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -95,7 +106,6 @@ public class Node implements Serializable, WritableComparable<Node> {
         objOut.close();
         out.writeInt(outB.size());
         out.write(outB.toByteArray());
-
     }
 
     @Override
@@ -124,5 +134,12 @@ public class Node implements Serializable, WritableComparable<Node> {
             e.printStackTrace();
         }
 
+    }
+
+    public void normalize() {
+        final double[] totalInfluence = {0.0d};
+        getAdjacency().forEach((node, influence) -> totalInfluence[0] += influence);
+
+        getAdjacency().forEach((node, influence) -> getAdjacency().put(node, influence / totalInfluence[0]));
     }
 }
