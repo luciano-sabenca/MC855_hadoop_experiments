@@ -18,6 +18,35 @@ public class MainAnalysis {
     
     Configuration conf = new Configuration();
     conf.set("fs.default.name", "hdfs://localhost:9000");
+    
+    getNodeMaximumInfluence(conf);
+    getNodesAverageInfluence(conf);
+    
+    System.exit(0);
+  }
+  
+  private static void getNodesAverageInfluence(Configuration conf) throws Exception {
+    Job job = Job.getInstance(conf, "GraphInfluenceAverage");
+    
+    job.setJarByClass(MainAnalysis.class);
+    job.setMapperClass(GraphAnalysisMapper.class);
+    job.setMapOutputValueClass(DoubleWritable.class);
+    job.setReducerClass(GraphAnalysisAverageReducer.class);
+    job.setOutputKeyClass(IntWritable.class);
+    job.setOutputValueClass(Text.class);
+    
+    String dir = System.getProperty("user.dir");
+    Path inputPath = new Path("file:///" + dir + "/src/main/resources/output/part-r-00000");
+    FileInputFormat.addInputPath(job, inputPath);
+    
+    Path outputPath = new Path("file:///" + dir + "/src/main/resources/output/analysis/average");
+    FileOutputFormat.setOutputPath(job, outputPath);
+    
+    
+    job.waitForCompletion(true);
+  }
+  
+  private static void getNodeMaximumInfluence(Configuration conf) throws Exception {
     Job job = Job.getInstance(conf, "GraphInfluence");
     
     job.setJarByClass(MainAnalysis.class);
@@ -32,11 +61,11 @@ public class MainAnalysis {
     Path inputPath = new Path("file:///" + dir + "/src/main/resources/output/part-r-00000");
     FileInputFormat.addInputPath(job, inputPath);
     
-    Path outputPath = new Path("file:///" + dir + "/src/main/resources/output/analysis");
+    Path outputPath = new Path("file:///" + dir + "/src/main/resources/output/analysis/max");
     FileOutputFormat.setOutputPath(job, outputPath); 
     
     
-    System.exit(job.waitForCompletion(true) ? 0 : 1);
+    job.waitForCompletion(true);
   }
 
 }
